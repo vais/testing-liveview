@@ -1,4 +1,4 @@
-defmodule RangerWeb.Live.WeAreLiveTest do
+defmodule RangerWeb.WeAreLiveTest do
   use RangerWeb.ConnCase
   import Phoenix.LiveViewTest
 
