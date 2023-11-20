@@ -21,6 +21,7 @@ defmodule RangerWeb.Router do
     live "/greet", GreetLive
     live "/we-are-live", WeAreLive
     live "/avatar/:email", AvatarLive
+    live "/counter", CounterLive
   end
 
   # Other scopes may use custom stacks.
