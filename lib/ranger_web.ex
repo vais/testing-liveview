@@ -55,6 +55,9 @@ defmodule RangerWeb do
         layout: {RangerWeb.Layouts, :app}
 
       unquote(html_helpers())
+
+      defp ok(socket), do: {:ok, socket}
+      defp noreply(socket), do: {:noreply, socket}
     end
   end
 
