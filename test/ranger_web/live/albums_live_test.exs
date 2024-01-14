@@ -9,19 +9,44 @@ defmodule RangerWeb.AlbumsLiveTest do
     {:ok, view, _html} = live(conn, ~p"/albums")
 
     view
-    |> file_input("#upload-form", :photos, [
+    |> upload(@filename)
+
+    assert has_element?(view, ~s([data-role=image-preview][data-name="#{@filename}"]))
+  end
+
+  test "canceling an upload", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/albums")
+
+    view
+    |> upload(@filename)
+    |> cancel_upload
+
+    refute has_element?(view, ~s([data-role=image-preview][data-name="#{@filename}"]))
+  end
+
+  defp upload(view, filename) do
+    photos = [
       %{
-        name: @filename,
-        content: File.read!("test/support/images/#{@filename}"),
+        name: filename,
+        content: File.read!("test/support/images/#{filename}"),
         type: "image/png"
       }
-    ])
-    |> render_upload(@filename)
+    ]
+
+    view
+    |> file_input("#upload-form", :photos, photos)
+    |> render_upload(filename)
 
     view
     |> form("#upload-form")
-    |> render_change()
+    |> render_change
 
-    assert has_element?(view, ~s([data-role=image-preview][data-name="#{@filename}"]))
+    view
+  end
+
+  defp cancel_upload(view) do
+    view
+    |> element("[data-role=cancel-upload]")
+    |> render_click
   end
 end

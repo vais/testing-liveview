@@ -12,18 +12,30 @@ defmodule RangerWeb.AlbumsLive do
     |> noreply
   end
 
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    socket
+    |> cancel_upload(:photos, ref)
+    |> noreply
+  end
+
   def render(assigns) do
     ~H"""
     <.form phx-change="validate" id="upload-form" for={%{}}>
       <.live_file_input upload={@uploads.photos} />
     </.form>
 
-    <.live_img_preview
-      :for={entry <- @uploads.photos.entries}
-      entry={entry}
-      data-role="image-preview"
-      data-name={entry.client_name}
-    />
+    <figure :for={entry <- @uploads.photos.entries} class="flex flex-col">
+      <button
+        type="button"
+        data-role="cancel-upload"
+        phx-click="cancel-upload"
+        phx-value-ref={entry.ref}
+        class="self-end"
+      >
+        &times;
+      </button>
+      <.live_img_preview entry={entry} data-role="image-preview" data-name={entry.client_name} />
+    </figure>
     """
   end
 end
