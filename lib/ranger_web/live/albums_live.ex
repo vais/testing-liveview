@@ -24,6 +24,8 @@ defmodule RangerWeb.AlbumsLive do
       <.live_file_input upload={@uploads.photos} />
     </.form>
 
+    <p :for={err <- upload_errors(@uploads.photos)}><%= err %></p>
+
     <figure :for={entry <- @uploads.photos.entries} class="flex flex-col">
       <button
         type="button"

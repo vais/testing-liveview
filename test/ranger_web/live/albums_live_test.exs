@@ -24,6 +24,18 @@ defmodule RangerWeb.AlbumsLiveTest do
     refute has_element?(view, ~s([data-role=image-preview][data-name="#{@filename}"]))
   end
 
+  test "uploading too many files", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/albums")
+
+    view
+    |> upload(@filename)
+    |> upload(@filename)
+    |> upload(@filename)
+    |> upload(@filename)
+
+    assert render(view) =~ "too_many_files"
+  end
+
   defp upload(view, filename) do
     photos = [
       %{
