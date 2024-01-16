@@ -1,4 +1,4 @@
-defmodule RangerWeb.AlbumsLive do
+defmodule RangerWeb.AlbumsLive.New do
   use RangerWeb, :live_view
 
   def mount(_params, _session, socket) do
