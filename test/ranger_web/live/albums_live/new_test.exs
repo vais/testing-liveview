@@ -24,7 +24,7 @@ defmodule RangerWeb.AlbumsLive.NewTest do
     refute has_element?(view, ~s([data-role=image-preview][data-name="#{@filename}"]))
   end
 
-  test "uploading too many files", %{conn: conn} do
+  test "error when uploading too many files", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/albums")
 
     view
@@ -34,6 +34,40 @@ defmodule RangerWeb.AlbumsLive.NewTest do
     |> upload(@filename)
 
     assert render(view) =~ "too_many_files"
+  end
+
+  test "error when album name is blank (on change)", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/albums")
+
+    view
+    |> form("#upload-form", %{album: %{name: ""}})
+    |> render_change
+
+    assert has_element?(view, "p", "can't be blank")
+  end
+
+  test "error when album name is blank (on submit)", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/albums")
+
+    view
+    |> form("#upload-form", %{album: %{name: ""}})
+    |> render_submit
+
+    assert has_element?(view, "p", "can't be blank")
+  end
+
+  test "creating an album", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/albums")
+
+    {:ok, next_view, _html} =
+      view
+      |> upload(@filename)
+      |> form("#upload-form", %{album: %{name: "this is a test"}})
+      |> render_submit
+      |> follow_redirect(conn)
+
+    assert has_element?(next_view, "h2", "this is a test")
+    assert has_element?(next_view, "[data-role=image]")
   end
 
   defp upload(view, filename) do
