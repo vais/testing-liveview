@@ -33,6 +33,7 @@ defmodule RangerWeb.Router do
     live "/timeline", TimelineLive
     live "/albums", AlbumsLive.New
     live "/albums/:id", AlbumsLive.Show
+    live "/metrics", MetricsLive
   end
 
   # Other scopes may use custom stacks.
