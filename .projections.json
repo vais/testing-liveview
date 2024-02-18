@@ -1,30 +1,95 @@
 {
-  "lib/ranger_web/controllers/*.ex": {
-    "type": "controller",
-    "alternate": "test/{project|basename}_web/controllers/{}_test.exs",
+  "lib/ranger/*.ex": {
+    "type": "app",
+    "alternate": "test/ranger/{}_test.exs",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot} do",
-      "  use {project|basename|camelcase|capitalize}Web, :controller",
+      "defmodule Ranger.{camelcase|capitalize|dot} do",
       "end"
     ]
   },
 
-  "test/ranger_web/controllers/*_test.exs": {
+  "test/ranger/*_test.exs": {
     "type": "test",
-    "alternate": "lib/{project|basename}_web/controllers/{}.ex",
+    "alternate": "lib/ranger/{}.ex",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot}Test do",
-      "  use {project|basename|camelcase|capitalize}Web.ConnCase, async: true",
+      "defmodule Ranger.{camelcase|capitalize|dot}Test do",
+      "  use ExUnit.Case, async: true",
+      "",
+      "  alias Ranger.{camelcase|capitalize|dot}",
+      "end"
+    ]
+  },
+
+  "lib/ranger_web/controllers/*_controller.ex": {
+    "type": "controller",
+    "alternate": "test/ranger_web/controllers/{}_controller_test.exs",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Controller do",
+      "  use RangerWeb, :controller",
+      "end"
+    ]
+  },
+
+  "test/ranger_web/controllers/*_controller_test.exs": {
+    "type": "test",
+    "alternate": "lib/ranger_web/controllers/{}_controller.ex",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}ControllerTest do",
+      "  use RangerWeb.ConnCase, async: true",
+      "end"
+    ]
+  },
+
+  "lib/ranger_web/controllers/*_html.ex": {
+    "type": "html",
+    "alternate": "test/ranger_web/controllers/{}_html_test.exs",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}HTML do",
+      "  use RangerWeb, :html",
+      "end"
+    ]
+  },
+
+  "test/ranger_web/controllers/*_html_test.exs": {
+    "type": "test",
+    "alternate": "lib/ranger_web/controllers/{}_html.ex",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}HTMLTest do",
+      "  use RangerWeb.ConnCase, async: true",
+      "",
+      "  alias RangerWeb.{camelcase|capitalize|dot}HTML",
+      "end"
+    ]
+  },
+
+  "lib/ranger_web/channels/*_channel.ex": {
+    "type": "channel",
+    "alternate": "test/ranger_web/channels/{}_channel_test.exs",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Channel do",
+      "  use RangerWeb, :channel",
+      "end"
+    ]
+  },
+
+  "test/ranger_web/channels/*_channel_test.exs": {
+    "type": "test",
+    "alternate": "lib/ranger_web/channels/{}_channel.ex",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}ChannelTest do",
+      "  use RangerWeb.ChannelCase, async: true",
+      "",
+      "  alias RangerWeb.{camelcase|capitalize|dot}Channel",
       "end"
     ]
   },
 
   "lib/ranger_web/live/*.ex": {
     "type": "live",
-    "alternate": "test/{project|basename}_web/live/{}_test.exs",
+    "alternate": "test/ranger_web/live/{}_test.exs",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot} do",
-      "  use {project|basename|camelcase|capitalize}Web, :live_view",
+      "defmodule RangerWeb.{camelcase|capitalize|dot} do",
+      "  use RangerWeb, :live_view",
       "",
       "  def render(assigns) do",
       "    ~H\"\"\"",
@@ -33,12 +98,13 @@
       "end"
     ]
   },
+
   "test/ranger_web/live/*_test.exs": {
     "type": "test",
-    "alternate": "lib/{project|basename}_web/live/{}.ex",
+    "alternate": "lib/ranger_web/live/{}.ex",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot}Test do",
-      "  use {project|basename|camelcase|capitalize}Web.ConnCase, async: true",
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Test do",
+      "  use RangerWeb.ConnCase, async: true",
       "",
       "  import Phoenix.LiveViewTest",
       "",
@@ -49,27 +115,50 @@
     ]
   },
 
-  "lib/ranger_web/components/*.ex": {
+  "lib/ranger_web/components/*_component.ex": {
     "type": "component",
-    "alternate": "test/{project|basename}_web/components/{}_test.exs",
-    "related": "lib/{project|basename}_web/live/{}_live.ex",
+    "alternate": "test/ranger_web/components/{}_component_test.exs",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot} do",
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Component do",
       "  use Phoenix.Component",
       "end"
     ]
   },
 
-  "test/ranger_web/components/*_test.exs": {
+  "test/ranger_web/components/*_component_test.exs": {
     "type": "test",
-    "alternate": "lib/{project|basename}_web/components/{}.ex",
+    "alternate": "lib/ranger_web/components/{}_component.ex",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot}Test do",
+      "defmodule RangerWeb.{camelcase|capitalize|dot}ComponentTest do",
       "  use ExUnit.Case, async: true",
       "",
       "  import Phoenix.LiveViewTest",
       "  import Phoenix.Component, only: [sigil_H: 2]",
-      "  import {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot}",
+      "  import RangerWeb.{camelcase|capitalize|dot}Component",
+      "end"
+    ]
+  },
+
+  "lib/ranger_web/components/*_components.ex": {
+    "type": "components",
+    "alternate": "test/ranger_web/components/{}_components_test.exs",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Components do",
+      "  use Phoenix.Component",
+      "end"
+    ]
+  },
+
+  "test/ranger_web/components/*_components_test.exs": {
+    "type": "test",
+    "alternate": "lib/ranger_web/components/{}_components.ex",
+    "template": [
+      "defmodule RangerWeb.{camelcase|capitalize|dot}ComponentsTest do",
+      "  use ExUnit.Case, async: true",
+      "",
+      "  import Phoenix.LiveViewTest",
+      "  import Phoenix.Component, only: [sigil_H: 2]",
+      "  import RangerWeb.{camelcase|capitalize|dot}Components",
       "end"
     ]
   },
@@ -77,8 +166,8 @@
   "test/ranger_web/features/*_test.exs": {
     "type": "feature",
     "template": [
-      "defmodule {project|basename|camelcase|capitalize}Web.{camelcase|capitalize|dot}Test do",
-      "  use {project|basename|camelcase|capitalize}Web.FeatureCase, async: true",
+      "defmodule RangerWeb.{camelcase|capitalize|dot}Test do",
+      "  use RangerWeb.FeatureCase, async: true",
       "end"
     ]
   },
